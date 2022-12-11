@@ -18,19 +18,36 @@ template<typename type>
 bin_image<type>::bin_image(int length, int width) : length(length), width(width)
 {
 	if (length < 1 || width < 1) { throw error("Incorrect length and width calculations"); }
-	data = new type * [length];
+	this->length = length;
+	this->width = width;
+	/*data = new type * [length];
 	for (int i = 0; i < length; i++) {
 		data[i] = new type[width];
+	}*/
+	data.resize(length);
+	for (auto iterator = data.begin(); iterator != data.end(); iterator++) {
+		vector<type> vectorinVect;
+		vectorinVect.resize(width);
+		(*iterator) = vectorinVect;
 	}
 }
 
 template<typename type>
-type& bin_image<type>::operator ()(int str_index, int col_index) const {
+type bin_image<type>::operator ()(int str_index, int col_index)  {
 	if (str_index < 0 || str_index >= length) { throw error("Invalid str_index"); }
 	if (col_index < 0 || col_index >= width) { throw error("Invalid col_index"); }
-	type& a = data[str_index][col_index];
-	return a;
+	return data.at(str_index).at(col_index);
 }
+
+
+template<typename type>
+void bin_image<type>::operator ()(int str_index, int col_index, type value) {
+	if (str_index < 0 || str_index >= length) { throw error("Invalid str_index"); }
+	if (col_index < 0 || col_index >= width) { throw error("Invalid col_index"); }
+	this->data.at(str_index).at(col_index) = value;
+}
+
+
 
 template<typename type>
 bin_image<type>& bin_image<type>:: operator !() {
@@ -62,10 +79,11 @@ double bin_image<type>::fill_factor() const {
 
 template<typename type>
 bin_image<type>::~bin_image() {
-	for (int i = 0; i < length; i++) {
+	/*for (int i = 0; i < length; i++) {
 		delete[]data[i];
 	}
-	delete[]data;
+	delete[]data;*/
+	data.clear();
 	length = 0;
 	width = 0;
 }
@@ -74,13 +92,14 @@ template<typename type>
 bin_image<type>::bin_image(const bin_image& a) {
 	length = a.length;
 	width = a.width;
-	data = new type * [length];
+	/*data = new type * [length];
 	for (int i = 0; i < length; i++) {
 		data[i] = new type[width];
 		for (int j = 0; j < width; j++) {
 			data[i][j] = a.data[i][j];
 		}
-	}
+	}*/
+	this->data = a.data;
 }
 
 

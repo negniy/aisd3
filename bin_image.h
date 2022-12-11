@@ -10,27 +10,26 @@
 #include <time.h>
 #include <iostream>
 #include "errors.h"
-
-
-/*
-Сделать тип пикселя шаблонным параметром.Обеспечить работоспособность шаблонного класса как минимум со следующими типами :
-bool;
-char;
-short;
-float.
-*/
+#include <vector>
+using namespace std;
 
 template<typename type>
 class bin_image
 {
 private:
-	type** data;
+	vector<vector<type>> data;
+
+	auto begin() { return data.begin(); }
+
+	auto end() { return data.end(); }
+
 	int length, width;
 public:
 	int get_length() const;
 	int get_width() const;
 	bin_image(int length = 10, int width = 10);
-	type& operator ()(int str_index, int col_index) const;
+	type operator ()(int str_index, int col_index);
+	void operator ()(int str_index, int col_index, type value);
 	bin_image& operator !();
 	double fill_factor() const;
 	~bin_image();

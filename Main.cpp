@@ -11,6 +11,8 @@
 #include <time.h>
 #include <iostream>
 #include "errors.h"
+using namespace std;
+
 /*
 В данной работе необходимо улучшить свой класс из предыдущей лабораторной работы, полностью делегировав управление памятью стандартному контейнеру.
 1. Конструктор копирования, оператор присваивания и деструктор в классе должны неявно генерироваться компилятором (см. ключевое слово default); при этом операции копирования должны выполнять глубокое клонирование объекта (т. е. внешнее поведение класса должно остаться таким же, каким и было).
@@ -143,12 +145,11 @@ void create_circle(double radios, int x, int y, bin_image<type>& A) {
 
 	for (int i = 0; i < A.get_length(); i++) {
 		for (int j = 0; j < A.get_width(); j++) {
-			type& item = A(i, j);
 			double a = sqrt((y - i) * (y - i) + (x - j) * (x - j));
 			if (a <= radios) {
-				item = true;
+				A(i, j, true);
 			}
-			else { item = false; }
+			else { A(i, j, false); }
 		}
 	}
 	if (A.fill_factor() == 0) throw error("Empty image\n");

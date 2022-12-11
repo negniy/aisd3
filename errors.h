@@ -1,5 +1,4 @@
 #pragma once
-
 #include "stdio.h"
 #include <stdlib.h>
 #include <string>
@@ -10,6 +9,7 @@
 #include <conio.h>
 #include <time.h>
 #include <iostream>
+using namespace std;
 
 class error
 {
