@@ -80,6 +80,7 @@ bool check_bool() {
 
 	return number;
 }
+
 double check_double() {
 	double number = 0;
 	while (number <= 0)
@@ -121,6 +122,7 @@ bin_image<type> create_image() {
 		}
 	}
 }
+
 template<typename type>
 void create_circle(double radios, int x, int y, bin_image<type>& A) {
 	if (radios < 0) { throw error("Invalid radios value\n"); }

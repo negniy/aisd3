@@ -28,19 +28,26 @@ public:
 	int get_length() const;
 	int get_width() const;
 	bin_image(int length = 10, int width = 10);
-	type operator ()(int str_index, int col_index);
+	type operator ()(int str_index, int col_index) const;
 	void operator ()(int str_index, int col_index, type value);
 	bin_image& operator !();
 	double fill_factor() const;
 	~bin_image();
 	bin_image(const bin_image& a);
 
-	friend std::ostream& operator <<(std::ostream& s, const bin_image<type>& image)
+	friend std::ostream& operator <<(std::ostream& s, const bin_image<type>& image) 
 	{
-		for (int i = 0; i < image.length; i++) {
+		/*for (int i = 0; i < image.length; i++) {
 			for (int j = 0; j < image.width; j++) {
-				if (image.data[i][j] == false) { s << " ."; }
-				if (image.data[i][j] == true) { s << " 1"; }
+				if (image.data[i][j] == 0) { s << " ."; }
+				if (image.data[i][j] == 1) { s << " 1"; }
+			}
+			s << "\n";
+		}*/
+		for (auto lines : image.data) {
+			for (auto lines_item : lines) {
+				if (lines_item == 0) { s << " ."; }
+				if (lines_item == 1) { s << " 1"; }
 			}
 			s << "\n";
 		}
@@ -51,10 +58,20 @@ public:
 	{
 		if (image_1.length != image_2.length || image_1.width != image_2.width) { throw error("Addition error"); }
 		bin_image<type> image(image_1.length, image_1.width);
-		for (int i = 0; i < image_1.length; i++) {
+		/*for (int i = 0; i < image_1.length; i++) {
 			for (int j = 0; j < image_1.width; j++) {
 				image.data[i][j] = (image_1.data[i][j] || image_2.data[i][j]);
 			}
+		}*/
+		int i = 0;
+		int j = 0;
+		for (auto iterator1 = image.data.begin(); iterator1 != image.data.end(); iterator1++) {
+			for (auto iterator2 = (*iterator1).begin(); iterator2 != (*iterator1).end(); iterator2++) {
+				(*iterator2) = (image_1.data.at(i).at(j) || image_2.data.at(i).at(j));
+				j++;
+			}
+			j = 0;
+			i++;
 		}
 		return image;
 	}
@@ -63,10 +80,20 @@ public:
 	{
 		if (image_1.length != image_2.length || image_1.width != image_2.width) { throw error("Multiplication error"); }
 		bin_image<type> image(image_1.length, image_1.width);
-		for (int i = 0; i < image_1.length; i++) {
+		/*for (int i = 0; i < image_1.length; i++) {
 			for (int j = 0; j < image_1.width; j++) {
 				image.data[i][j] = (image_1.data[i][j] && image_2.data[i][j]);
 			}
+		}*/
+		int i = 0;
+		int j = 0;
+		for (auto iterator1 = image.data.begin(); iterator1 != image.data.end(); iterator1++) {
+			for (auto iterator2 = (*iterator1).begin(); iterator2 != (*iterator1).end(); iterator2++) {
+				(*iterator2) = (image_1.data.at(i).at(j) && image_2.data.at(i).at(j));
+				j++;
+			}
+			j = 0;
+			i++;
 		}
 		return image;
 	}
@@ -74,10 +101,20 @@ public:
 	friend bin_image<type> operator*(const bin_image<type>& image, bool a)
 	{
 		bin_image<type> tmp(image.length, image.width);
-		for (int i = 0; i < image.length; i++) {
+		/*for (int i = 0; i < image.length; i++) {
 			for (int j = 0; j < image.width; j++) {
 				tmp.data[i][j] = (image.data[i][j] && a);
 			}
+		}*/
+		int i = 0;
+		int j = 0;
+		for (auto iterator1 = tmp.data.begin(); iterator1 != tmp.data.end(); iterator1++) {
+			for (auto iterator2 = (*iterator1).begin(); iterator2 != (*iterator1).end(); iterator2++) {
+				(*iterator2) = (image.data.at(i).at(j) && a);
+				j++;
+			}
+			j = 0;
+			i++;
 		}
 		return tmp;
 	}
@@ -85,10 +122,20 @@ public:
 	friend bin_image<type> operator+(const bin_image<type>& image, bool a)
 	{
 		bin_image<type> tmp(image.length, image.width);
-		for (int i = 0; i < image.length; i++) {
+		/*for (int i = 0; i < image.length; i++) {
 			for (int j = 0; j < image.width; j++) {
 				tmp.data[i][j] = (image.data[i][j] || a);
 			}
+		}*/
+		int i = 0;
+		int j = 0;
+		for (auto iterator1 = tmp.data.begin(); iterator1 != tmp.data.end(); iterator1++) {
+			for (auto iterator2 = (*iterator1).begin(); iterator2 != (*iterator1).end(); iterator2++) {
+				(*iterator2) = (image.data.at(i).at(j) || a);
+				j++;
+			}
+			j = 0;
+			i++;
 		}
 		return tmp;
 	}
@@ -96,10 +143,20 @@ public:
 	friend bin_image<type> operator*(bool a, const bin_image<type>& image)
 	{
 		bin_image<type> tmp(image.length, image.width);
-		for (int i = 0; i < image.length; i++) {
+		/*for (int i = 0; i < image.length; i++) {
 			for (int j = 0; j < image.width; j++) {
 				tmp.data[i][j] = (image.data[i][j] && a);
 			}
+		}*/
+		int i = 0;
+		int j = 0;
+		for (auto iterator1 = tmp.data.begin(); iterator1 != tmp.data.end(); iterator1++) {
+			for (auto iterator2 = (*iterator1).begin(); iterator2 != (*iterator1).end(); iterator2++) {
+				(*iterator2) = (image.data.at(i).at(j) && a);
+				j++;
+			}
+			j = 0;
+			i++;
 		}
 		return tmp;
 	}
@@ -107,10 +164,15 @@ public:
 	friend bin_image<type> operator+(bool a, const bin_image<type>& image)
 	{
 		bin_image<type> tmp(image.length, image.width);
-		for (int i = 0; i < image.length; i++) {
-			for (int j = 0; j < image.width; j++) {
-				tmp.data[i][j] = (image.data[i][j] || a);
+		int i = 0;
+		int j = 0;
+		for (auto iterator1 = tmp.data.begin(); iterator1 != tmp.data.end(); iterator1++) {
+			for (auto iterator2 = (*iterator1).begin(); iterator2 != (*iterator1).end(); iterator2++) {
+				(*iterator2) = (image.data.at(i).at(j) || a);
+				j++;
 			}
+			j = 0;
+			i++;
 		}
 		return tmp;
 	}

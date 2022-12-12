@@ -8,11 +8,13 @@ int bin_image<type>::get_length() const
 	return length;
 }
 
+
 template<typename type>
 int bin_image<type>::get_width() const
 {
 	return width;
 }
+
 
 template<typename type>
 bin_image<type>::bin_image(int length, int width) : length(length), width(width)
@@ -32,8 +34,9 @@ bin_image<type>::bin_image(int length, int width) : length(length), width(width)
 	}
 }
 
+
 template<typename type>
-type bin_image<type>::operator ()(int str_index, int col_index)  {
+type bin_image<type>::operator ()(int str_index, int col_index) const{
 	if (str_index < 0 || str_index >= length) { throw error("Invalid str_index"); }
 	if (col_index < 0 || col_index >= width) { throw error("Invalid col_index"); }
 	return data.at(str_index).at(col_index);
@@ -48,10 +51,9 @@ void bin_image<type>::operator ()(int str_index, int col_index, type value) {
 }
 
 
-
 template<typename type>
 bin_image<type>& bin_image<type>:: operator !() {
-	for (int i = 0; i < length; i++) {
+	/*for (int i = 0; i < length; i++) {
 		for (int j = 0; j < width; j++) {
 			if (data[i][j] == 0) {
 				data[i][j] = 1;
@@ -60,22 +62,36 @@ bin_image<type>& bin_image<type>:: operator !() {
 				data[i][j] = 0;
 			}
 		}
+	}*/	
+	for (auto iterator1 = data.begin(); iterator1 != data.end(); iterator1++) {
+		for (auto iterator2 = (*iterator1).begin(); iterator2 != (*iterator1).end(); iterator2++) {
+			if ((*iterator2) == 0) { (*iterator2) = 1; }
+			else { (*iterator2) = 0; }
+		}
 	}
 	return *this;
 }
+
 
 template<typename type>
 double bin_image<type>::fill_factor() const {
 	double count_0 = 0;
 	double count_1 = 0;
-	for (int i = 0; i < length; i++) {
+	/*for (int i = 0; i < length; i++) {
 		for (int j = 0; j < width; j++) {
 			if (data[i][j] == false) { count_0 += 1; }
 			if (data[i][j] == true) { count_1 += 1; }
 		}
+	}*/
+	for (auto iterator1 = data.begin(); iterator1 != data.end(); iterator1++) {
+		for (auto iterator2 = (*iterator1).begin(); iterator2 != (*iterator1).end(); iterator2++) {
+			if ((*iterator2) == 0) { count_0 += 1; }
+			if ((*iterator2) == 1) { count_1 += 1; }
+		}
 	}
 	return (double)(count_1) / (count_0 + count_1);
 }
+
 
 template<typename type>
 bin_image<type>::~bin_image() {
@@ -87,6 +103,7 @@ bin_image<type>::~bin_image() {
 	length = 0;
 	width = 0;
 }
+
 
 template<typename type>
 bin_image<type>::bin_image(const bin_image& a) {
