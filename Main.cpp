@@ -145,7 +145,7 @@ void create_circle(double radios, int x, int y, bin_image<type>& A) {
 		if (a <= radios) { throw error("Going beyond the boundaries of the image\n"); }
 	}
 
-	for (int i = 0; i < A.get_length(); i++) {
+	/*for (int i = 0; i < A.get_length(); i++) {
 		for (int j = 0; j < A.get_width(); j++) {
 			double a = sqrt((y - i) * (y - i) + (x - j) * (x - j));
 			if (a <= radios) {
@@ -153,7 +153,10 @@ void create_circle(double radios, int x, int y, bin_image<type>& A) {
 			}
 			else { A(i, j, false); }
 		}
-	}
+	}*/
+
+	A.create_circle(radios, x, y);
+
 	if (A.fill_factor() == 0) throw error("Empty image\n");
 }
 

@@ -3,6 +3,25 @@
 
 
 template<typename type>
+void bin_image<type>::create_circle(double radios, int x, int y)
+{
+	if (x <= 0 || x >= length) { throw error("Invalid str_index"); }
+	if (y <= 0 || y >= width) { throw error("Invalid col_index"); }
+	int i = 0;
+	int j = 0;
+	for (auto iterator1 = data.begin(); iterator1 != data.end(); iterator1++) {
+		for (auto iterator2 = (*iterator1).begin(); iterator2 != (*iterator1).end(); iterator2++) {
+			double a = sqrt((y - i) * (y - i) + (x - j) * (x - j));
+			if (a <= radios) { (*iterator2) = 1; }
+			else { (*iterator2) = 0; }
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+}
+
+template<typename type>
 int bin_image<type>::get_length() const
 {
 	return length;
