@@ -3,25 +3,6 @@
 
 
 template<typename type>
-void bin_image<type>::create_circle(double radios, int x, int y)
-{
-	if (x <= 0 || x >= length) { throw error("Invalid str_index"); }
-	if (y <= 0 || y >= width) { throw error("Invalid col_index"); }
-	int i = 0;
-	int j = 0;
-	for (auto iterator1 = data.begin(); iterator1 != data.end(); iterator1++) {
-		for (auto iterator2 = (*iterator1).begin(); iterator2 != (*iterator1).end(); iterator2++) {
-			double a = sqrt((y - i) * (y - i) + (x - j) * (x - j));
-			if (a <= radios) { (*iterator2) = 1; }
-			else { (*iterator2) = 0; }
-			j++;
-		}
-		j = 0;
-		i++;
-	}
-}
-
-template<typename type>
 int bin_image<type>::get_length() const
 {
 	return length;
@@ -102,8 +83,8 @@ double bin_image<type>::fill_factor() const {
 			if (data[i][j] == true) { count_1 += 1; }
 		}
 	}*/
-	for (auto iterator1 = data.begin(); iterator1 != data.end(); iterator1++) {
-		for (auto iterator2 = (*iterator1).begin(); iterator2 != (*iterator1).end(); iterator2++) {
+	for (auto iterator1 = data.cbegin(); iterator1 != data.cend(); iterator1++) {
+		for (auto iterator2 = (*iterator1).cbegin(); iterator2 != (*iterator1).cend(); iterator2++) {
 			if ((*iterator2) == 0) { count_0 += 1; }
 			if ((*iterator2) == 1) { count_1 += 1; }
 		}
@@ -112,19 +93,19 @@ double bin_image<type>::fill_factor() const {
 }
 
 
-template<typename type>
+/*template<typename type>
 bin_image<type>::~bin_image() {
 	/*for (int i = 0; i < length; i++) {
 		delete[]data[i];
 	}
-	delete[]data;*/
+	delete[]data;
 	data.clear();
 	length = 0;
 	width = 0;
-}
+}*/
 
 
-template<typename type>
+/*template<typename type>
 bin_image<type>::bin_image(const bin_image& a) {
 	length = a.length;
 	width = a.width;
@@ -134,9 +115,9 @@ bin_image<type>::bin_image(const bin_image& a) {
 		for (int j = 0; j < width; j++) {
 			data[i][j] = a.data[i][j];
 		}
-	}*/
+	}*
 	this->data = a.data;
-}
+}*/
 
 
 template class bin_image<short>;

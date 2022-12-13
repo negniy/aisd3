@@ -31,27 +31,30 @@ public:
 
 	auto cend() const { return data.cend(); }
 
-	void create_circle(double radios, int x, int y);
+	//void create_circle(double radios, int x, int y);
 
 	int get_length() const;
 
 	int get_width() const;
 
-	bin_image(int length = 10, int width = 10);
+	bin_image() = default;
+
+	bin_image(int length, int width);
 
 	type operator ()(int str_index, int col_index) const;
 
 	void operator ()(int str_index, int col_index, type value);
 
 	bin_image& operator !();
-
+	
+	
 	double fill_factor() const;
 
-	~bin_image();
+	~bin_image() = default;
 
-	bin_image(const bin_image& a);
+	bin_image(const bin_image& a) = default;
 
-
+	bin_image<type>& operator=(const bin_image<type>& a) = default;
 
 	friend std::ostream& operator <<(std::ostream& s, const bin_image<type>& image) 
 	{
